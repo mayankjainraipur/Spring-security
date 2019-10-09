@@ -1,4 +1,4 @@
-package com.dboperation.interection.model;
+package com.login.security.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
