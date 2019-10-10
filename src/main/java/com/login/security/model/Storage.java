@@ -1,5 +1,8 @@
 package com.login.security.model;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,16 +35,18 @@ public class Storage {
         map=readFile();
         if (map != null){
             Employee emp = map.get(id);
-            return emp;
+            if (emp != null)
+                return emp;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee Not Found");
         }
-        return new Employee();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error in reading file");
     }
 
     public boolean updateEmployee(Employee emp) {
         map=readFile();
         if (map != null){
             Employee emp1 = map.get(emp.getId());
-            if (emp1.getName() != ""){
+            if (emp1 != null){
                 emp1.setName(emp.getName());
                 emp1.setCompany(emp.getCompany());
                 emp1.setDob(emp.getDob());
@@ -56,9 +61,12 @@ public class Storage {
     public boolean deleteEmployee(int id) {
         map=readFile();
         if (map !=null){
-            map.remove(id);
-            writeFile(map);
-            return true;
+            Employee e = map.get(id);
+            if (e != null){
+                map.remove(id);
+                writeFile(map);
+                return true;
+            }
         }
         return false;
     }
