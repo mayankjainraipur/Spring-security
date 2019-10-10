@@ -21,18 +21,17 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 @Order(1)
 public class AuthTokenSecurityConfig extends WebSecurityConfigurerAdapter{
 
-    @Value("${security.http.auth.tokenName}")
+    @Value("${login.http.auth.tokenName}")
     private String authHeaderName;
 
     //TODO: retrieve this token value from data source
-    @Value("${security.http.auth.tokenValue}")
+    @Value("${login.http.auth.tokenValue}")
     private String authHeaderValue;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception
     {
         PreAuthTokenHeaderFilter filter = new PreAuthTokenHeaderFilter(authHeaderName);
-
         filter.setAuthenticationManager(new AuthenticationManager()
         {
             @Override
@@ -52,7 +51,7 @@ public class AuthTokenSecurityConfig extends WebSecurityConfigurerAdapter{
         });
 
         httpSecurity.
-                antMatcher("/api/**")
+                antMatcher("/**")
                 .csrf()
                 .disable()
                 .sessionManagement()

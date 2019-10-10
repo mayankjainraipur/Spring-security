@@ -1,8 +1,8 @@
 package com.login.security.config;
 
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.web.authentication
-        .preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+
 public class PreAuthTokenHeaderFilter extends AbstractPreAuthenticatedProcessingFilter{
 
     private String authHeaderName;
@@ -18,6 +18,6 @@ public class PreAuthTokenHeaderFilter extends AbstractPreAuthenticatedProcessing
 
     @Override
     protected Object getPreAuthenticatedCredentials(HttpServletRequest httpServletRequest) {
-        return null;
+        return "N/A";
     }
 }
